@@ -1,49 +1,49 @@
-def wordcount(fileSelected):
-    selectedFile = open(fileSelected + ".txt", 'r')
-    wordCounter = 0
-    for line in selectedFile:
-        for i in range(len(line)):
-            try:
-                if line[i] == " " and line[i + 1] != " ":
-                    wordCounter += 1
-            except IndexError:
-                print("Error")
-        wordCounter += 1
-    print(wordCounter)
+# Karim Zaher
 
-print("0 - Encrypt File")
-print("1 - Decrypt File")
-print("2 - Exit")
+
+def wordcount(fileSelected):
+    # Choose which file to edit
+    selectedFile = open(fileSelected + ".txt", 'r')
+    # Initialize variables
+    wordCounter = 0
+    alphabet = []
+
+    for letter in range(97, 123):
+        alphabet.append(chr(letter))
+
+    for line in selectedFile:
+        words = line.split(" ")  # Turns a line into an array
+        if words != ['\n']:  # Checks to see whether line is empty or not
+            for word in words:
+                for i in alphabet:
+                    if i in word.lower():
+                        wordCounter += 1
+                        break
+    return wordCounter
+
+
+print("0 - Word Counter")
+print("1 - Encrypt Text[currently unavailable]")
+print("2 - Decrypt Text[currently unavailable]")
+print("3 - Exit")
 
 action = int(input("\nSelect an action: "))
 
-while action not in [0, 1, 2]:
+while action not in [0, 1, 2, 3]:  # If input is invalid
     print("Invalid input:", action)
-    print("0 - Encrypt File")
-    print("1 - Decrypt File")
-    print("2 - Word Counter")
+    print("0 - Word Counter")
+    print("1 - Encrypt Text[currently unavailable]")
+    print("2 - Decrypt Text[currently unavailable]")
     print("3 - Exit")
     action = int(input("What action would you like to perform?"))
 
-fileName = input("Enter .txt File Name: ")
-if ".txt" in fileName:
-    print("Edit changes to", fileName +".txt?")
-    print("0 - Change Name")
-    print("1 - Keep Name")
+if action == 3:
+    quit()
 
-selectedFile = open(fileName + ".txt", 'r')
-wordCounter = 0
-for line in selectedFile:
-    words = line.split(" ")
-    print(words)
-    if words != ['\n']:
-        wordCounter += len(words)
-    # for i in range(len(line)):
-    #     try:
-    #         if line[i] == " " and line[i+1] != " ":
-    #             wordCounter += 1
-    #     except IndexError:
-    #         print("Error")
-    # if len(line) != 0:
-    #     wordCounter += 1
-print(wordCounter)
+fileName = input("Enter .txt File Name: ")
+if ".txt" == fileName[len(fileName) - 4:len(fileName)]:  # Removes .txt extension if user adds it
+    fileName = fileName[0:len(fileName) - 4]
+    print(fileName)
+
+if action == 0:
+    print(wordcount(fileName))
